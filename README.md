@@ -1,0 +1,2 @@
+# fastText_tips
+fastText
