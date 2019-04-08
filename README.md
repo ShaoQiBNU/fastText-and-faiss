@@ -139,6 +139,13 @@ index = faiss.IndexFlatIP(d)
 normalize_L2(xb)
 
 ###### index Map #######
+'''
+该函数的作用如下：
+This index encapsulates another index and translates ids when adding and searching. It maintains a table with the mapping.
+
+https://github.com/facebookresearch/faiss/wiki/Pre--and-post-processing
+'''
+
 index2 = faiss.IndexIDMap(index)
 
 ###### add vectors to the index ######
