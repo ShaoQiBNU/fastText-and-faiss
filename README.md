@@ -1,13 +1,13 @@
 
 # fastText相关资料
 
-https://fasttext.cc/docs/en/support.html.
+https://fasttext.cc/docs/en/support.html
 
-https://github.com/facebookresearch/fastText.
+https://github.com/facebookresearch/fastText
 
-http://www.52nlp.cn/fasttext.
+http://www.52nlp.cn/fasttext
 
-https://blog.csdn.net/kanbuqinghuanyizhang/article/details/80774609.
+https://blog.csdn.net/kanbuqinghuanyizhang/article/details/80774609
 
 https://pypi.org/project/pyfasttext/
 
