@@ -122,3 +122,64 @@ index2.add_with_ids(xb, ids)
 ###### search result ######
 D, I = index2.search(xb[:5], k)
 ```
+
+
+# 四. 向量聚类
+
+> faiss做k-means聚类实例，以bert的最后一层输出向量为例，提取每个query的cls向量，然后聚类，输出每个query的聚类中心，代码如下：
+
+```python
+#!/usr/bin/env python
+# coding=utf-8
+import json
+import sys
+import numpy as np
+import faiss
+
+values = []
+tokens = []
+line_index = []
+
+############# 逐行读入json文件，并解析 #############
+for line in sys.stdin:
+    line = line.strip()
+    data = json.loads(line)
+
+    token = ''
+    value = []
+
+    ############# 提取query #############
+    for i in data['features']:
+        token = token + i['token']
+
+    ############# 提取query里的cls向量 #############
+    for j in data['features'][0]['layers']:
+        value.extend(j['values'])
+
+    ############# 结果保存 #############
+    values.append(value)
+    tokens.append(token)
+    line_index.append(data['linex_index'])
+
+############# 数据转换类型 ##############
+query_values = np.array(values)
+query_values = query_values.astype('float32')
+
+############# k-means 聚类 ##############
+ncentroids = 1000
+niter = 20
+verbose = False
+d = 768
+
+kmeans = faiss.Kmeans(d, ncentroids, niter, verbose)
+kmeans.train(query_values)
+
+
+############# 获取每个query的聚类中心 ###############
+D, I = kmeans.index.search(query_values, 1)
+
+i = 0
+for center in np.nditer(I):
+    print(i, tokens[i], center, sep="\t")
+    i = i + 1
+```
